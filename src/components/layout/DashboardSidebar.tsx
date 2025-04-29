@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Sidebar,
   SidebarContent,
@@ -17,18 +18,20 @@ import { cn } from "@/lib/utils";
 interface SidebarItemProps {
   icon: React.ElementType;
   label: string;
-  isActive?: boolean;
-  href: string;
+  to: string;
 }
 
-const SidebarItem = ({ icon: Icon, label, isActive = false, href }: SidebarItemProps) => {
+const SidebarItem = ({ icon: Icon, label, to }: SidebarItemProps) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
   return (
     <SidebarMenuItem>
       <SidebarMenuButton asChild className={cn(isActive && "bg-sidebar-accent text-sidebar-accent-foreground")}>
-        <a href={href} className="flex items-center gap-3">
+        <Link to={to} className="flex items-center gap-3">
           <Icon className="h-5 w-5" />
           <span>{label}</span>
-        </a>
+        </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );
@@ -48,12 +51,12 @@ const DashboardSidebar = () => {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarItem icon={Home} label="Dashboard" isActive={true} href="/" />
-              <SidebarItem icon={Users} label="Clients" href="/clients" />
-              <SidebarItem icon={ChartBar} label="Investments" href="/investments" />
-              <SidebarItem icon={Calendar} label="Meetings" href="/meetings" />
-              <SidebarItem icon={Check} label="Tasks" href="/tasks" />
-              <SidebarItem icon={DollarSign} label="Financials" href="/financials" />
+              <SidebarItem icon={Home} label="Dashboard" to="/" />
+              <SidebarItem icon={Users} label="Clients" to="/clients" />
+              <SidebarItem icon={ChartBar} label="Investments" to="/investments" />
+              <SidebarItem icon={Calendar} label="Meetings" to="/meetings" />
+              <SidebarItem icon={Check} label="Tasks" to="/tasks" />
+              <SidebarItem icon={DollarSign} label="Financials" to="/financials" />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -63,8 +66,8 @@ const DashboardSidebar = () => {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarItem icon={Settings} label="Settings" href="/settings" />
-              <SidebarItem icon={LogOut} label="Logout" href="/logout" />
+              <SidebarItem icon={Settings} label="Settings" to="/settings" />
+              <SidebarItem icon={LogOut} label="Logout" to="/logout" />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
